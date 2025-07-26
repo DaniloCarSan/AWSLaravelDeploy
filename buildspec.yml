@@ -1,0 +1,16 @@
+version: 0.2      
+phases:
+  install:
+    on-failure: ABORT
+    runtime-versions:
+      php: 8.3
+    commands:
+      - composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+      - npm install
+  build:
+    commands:
+      - npm run build
+      - cp .env.example .env
+artifacts:
+  files:
+    - '**/*'
