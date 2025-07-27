@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Atualiza pacotes
+yum update -y
+
+# Instala dependências
+yum install ruby wget -y
+
+# Para e remove agente antigo, se existir
+if [ -f /opt/codedeploy-agent/bin/codedeploy-agent ]; then
+  /opt/codedeploy-agent/bin/codedeploy-agent stop
+  yum erase codedeploy-agent -y
+fi
+
+# Baixa e instala o agente
+cd /tmp
+wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
+chmod +x ./install
+./install auto
+
+# Inicia e habilita o serviço
+systemctl start codedeploy-agent
+systemctl enable codedeploy-agent
+
+# Verifica status (opcional)
+systemctl status codedeploy-agent
