@@ -1,8 +1,5 @@
 <?php
 
-echo "Loading Laravel application...\n";
-
-exit;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
